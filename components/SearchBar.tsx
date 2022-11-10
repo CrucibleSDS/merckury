@@ -76,7 +76,12 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.casNumber}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
+                        <div
+                          className={clsxm(
+                            "pl-8 py-1",
+                            active ? "bg-zinc-200" : "bg-white"
+                          )}
+                        >
                           CAS Number
                         </div>
                         {selected ? (
@@ -90,7 +95,12 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.productName}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
+                        <div
+                          className={clsxm(
+                            "pl-8 py-1",
+                            active ? "bg-zinc-200" : "bg-white"
+                          )}
+                        >
                           Product Name
                         </div>
                         {selected ? (
@@ -104,7 +114,12 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.productNumber}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
+                        <div
+                          className={clsxm(
+                            "pl-8 py-1",
+                            active ? "bg-zinc-200" : "bg-white"
+                          )}
+                        >
                           Product Number
                         </div>
                         {selected ? (
