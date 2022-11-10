@@ -41,7 +41,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <div className="w-11/12">
       <form className="w-11/12 mx-auto" onSubmit={search}>
         <fieldset className="relative border-2 border-merck-teal">
           <legend className="text-merck-teal font-semibold ml-1 -mb-3 px-1 pb-1">
