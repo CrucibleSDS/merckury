@@ -29,6 +29,8 @@ const SearchBar = () => {
 
     if (query.length !== 0) {
       fetchSearchResults();
+    } else {
+      setSearchResults([]);
     }
   }, [query, searchType]);
 
