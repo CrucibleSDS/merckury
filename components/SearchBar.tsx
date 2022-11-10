@@ -3,7 +3,11 @@ import clsxm from "@/utils/clsxm";
 import { SafetyDataSheet, searchSds, SearchType } from "@/utils/api";
 import { FormEvent, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon, DocumentArrowDownIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  DocumentArrowDownIcon,
+} from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 const SearchBar = () => {
@@ -138,46 +142,54 @@ const SearchBar = () => {
       </form>
 
       <div className="mt-8">
-        <table className="table-auto border-2 border-merck-teal border-collapse">
-          <thead>
-            <tr>
-              <th scope="col" className="border border-black px-6 py-2">
-                PDF
-              </th>
-              <th scope="col" className="border border-black px-6 py-2">
-                ID
-              </th>
-              <th scope="col" className="border border-black px-6 py-2">
-                Product Name
-              </th>
-              <th scope="col" className="border border-black px-6 py-2">
-                Product Brand
-              </th>
-              <th scope="col" className="border border-black px-6 py-2">
-                Product Number
-              </th>
-              <th scope="col" className="border border-black px-6 py-2">
-                CAS Number
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchResults.map((result) => (
+        {searchResults.length > 0 ? (
+          <table className="table-auto border-2 border-merck-teal border-collapse">
+            <thead>
               <tr>
-                <td className="border border-black">
-                  <a href={result.pdf_download_url}>
-                    <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
-                  </a>
-                </td>
-                <td className="border border-black">{result.id}</td>
-                <td className="border border-black">{result.product_name}</td>
-                <td className="border border-black">{result.product_brand}</td>
-                <td className="border border-black">{result.product_number}</td>
-                <td className="border border-black">{result.cas_number}</td>
+                <th scope="col" className="border border-black px-6 py-2">
+                  PDF
+                </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  ID
+                </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  Product Name
+                </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  Product Brand
+                </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  Product Number
+                </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  CAS Number
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {searchResults.map((result) => (
+                <tr>
+                  <td className="border border-black">
+                    <a href={result.pdf_download_url}>
+                      <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
+                    </a>
+                  </td>
+                  <td className="border border-black">{result.id}</td>
+                  <td className="border border-black">{result.product_name}</td>
+                  <td className="border border-black">
+                    {result.product_brand}
+                  </td>
+                  <td className="border border-black">
+                    {result.product_number}
+                  </td>
+                  <td className="border border-black">{result.cas_number}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : query.length > 0 ? (
+          <p>No results found.</p>
+        ) : null}
       </div>
     </div>
   );
