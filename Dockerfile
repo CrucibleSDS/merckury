@@ -15,9 +15,6 @@ FROM node:16
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
-ARG NEXT_PUBLIC_API_BASE_URL https://crucible.axolotl.cloud/api/v1
-ENV NEXT_PUBLIC_API_BASE_URL https://crucible.axolotl.cloud/api/v1
-
 WORKDIR /usr/src/app
 
 COPY --from=builder /merckury/components ./components
@@ -30,4 +27,4 @@ COPY --from=builder /merckury/.next/ ./.next
 COPY --from=builder /merckury/node_modules/ ./node_modules
 COPY --from=builder /merckury/package.json/ ./package.json
 
-CMD ["sh", "-c", "yarn start"]
+CMD ["sh", "-c", "yarn build && yarn start"]
