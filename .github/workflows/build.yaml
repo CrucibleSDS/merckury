@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build & Push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Create SHA Container Tag
+      id: sha_tag
+      run: |
+        tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+        echo "::set-output name=tag::$tag"
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1 
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        cache-from: type=registry,ref=ghcr.io/den4200/merckury:latest
+        cache-to: type=inline
+        tags: |
+          ghcr.io/den4200/merckury:latest
+          ghcr.io/den4200/merckury:${{ steps.sha_tag.outputs.tag }}
