@@ -143,12 +143,12 @@ const SearchBar = () => {
         </fieldset>
       </form>
 
-      <div className="mt-8">
+      <div className="mt-10">
         {searchResults.length > 0 ? (
           <table className="table-auto border-2 border-merck-teal border-collapse">
             <thead>
               <tr>
-                <th scope="col" className="border border-black px-6 py-2">
+                <th scope="col" className="border border-black px-3 py-2">
                   PDF
                 </th>
                 <th scope="col" className="border border-black px-6 py-2">
@@ -170,21 +170,21 @@ const SearchBar = () => {
             </thead>
             <tbody>
               {searchResults.map((result) => (
-                <tr>
-                  <td className="border border-black">
+                <tr className="even:bg-gray-200">
+                  <td scope="col" className="border-x border-black">
                     <a href={result.pdf_download_url}>
                       <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
                     </a>
                   </td>
-                  <td className="border border-black">{result.id}</td>
-                  <td className="border border-black">{result.product_name}</td>
-                  <td className="border border-black">
+                  <td scope="col" className="border-x border-black p-1">{result.id}</td>
+                  <td scope="col" className="border-x border-black p-1">{result.product_name}</td>
+                  <td scope="col" className="border-x border-black p-1">
                     {result.product_brand}
                   </td>
-                  <td className="border border-black">
+                  <td scope="col" className="border-x border-black p-1">
                     {result.product_number}
                   </td>
-                  <td className="border border-black">{result.cas_number}</td>
+                  <td scope="col" className="border-x border-black p-1">{result.cas_number}</td>
                 </tr>
               ))}
             </tbody>
