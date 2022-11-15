@@ -17,14 +17,6 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
-COPY --from=builder /merckury/components ./components
-COPY --from=builder /merckury/pages ./pages
-COPY --from=builder /merckury/public ./public
-COPY --from=builder /merckury/styles ./styles
-COPY --from=builder /merckury/utils ./utils
-COPY --from=builder /merckury/next.config.js ./next.config.js
-COPY --from=builder /merckury/.next/ ./.next
-COPY --from=builder /merckury/node_modules/ ./node_modules
-COPY --from=builder /merckury/package.json/ ./package.json
+COPY --from=builder /merckury .
 
 CMD ["sh", "-c", "yarn build && yarn start"]
