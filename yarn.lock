@@ -1601,6 +1601,16 @@ next@latest:
   languageName: node
   linkType: hard
 
+"react-spinners@npm:^0.13.6":
+  version: 0.13.6
+  resolution: "react-spinners@npm:0.13.6"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 0e557190b5811e62774de0000f91fdcc3afe845872084abd5620d16335eb8292ed3fb3fdb94527fe2802a8366ac4e5d42c8e5bffda9e8ed0d85d3c34b3829d8e
+  languageName: node
+  linkType: hard
+
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -1706,6 +1716,7 @@ next@latest:
     postcss: ^8.4.18
     react: 18.2.0
     react-dom: 18.2.0
+    react-spinners: ^0.13.6
     tailwind-merge: ^1.8.0
     tailwindcss: ^3.2.1
     typescript: 4.8.4

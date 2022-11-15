@@ -3,17 +3,15 @@ import clsxm from "@/utils/clsxm";
 import { SafetyDataSheet, searchSds, SearchType } from "@/utils/api";
 import { FormEvent, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  DocumentArrowDownIcon,
-} from "@heroicons/react/24/outline";
+import { CheckIcon, ChevronDownIcon, DocumentArrowDownIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { PropagateLoader } from "react-spinners";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [searchType, setSearchType] = useState(SearchType.casNumber);
   const [searchResults, setSearchResults] = useState<SafetyDataSheet[]>([]);
+  const [loading, setLoading] = useState(false);
 
   let searchTypeLabel =
     searchType === SearchType.casNumber
@@ -24,7 +22,9 @@ const SearchBar = () => {
 
   useEffect(() => {
     const fetchSearchResults = async () => {
+      setLoading(true);
       setSearchResults(await searchSds(query, searchType));
+      setLoading(false);
     };
 
     if (query.length !== 0) {
@@ -82,12 +82,7 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.casNumber}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div
-                          className={clsxm(
-                            "pl-8 py-1",
-                            active ? "bg-zinc-200" : "bg-white"
-                          )}
-                        >
+                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
                           CAS Number
                         </div>
                         {selected ? (
@@ -101,12 +96,7 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.productName}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div
-                          className={clsxm(
-                            "pl-8 py-1",
-                            active ? "bg-zinc-200" : "bg-white"
-                          )}
-                        >
+                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
                           Product Name
                         </div>
                         {selected ? (
@@ -120,12 +110,7 @@ const SearchBar = () => {
                   <Listbox.Option value={SearchType.productNumber}>
                     {({ selected, active }) => (
                       <div className="relative">
-                        <div
-                          className={clsxm(
-                            "pl-8 py-1",
-                            active ? "bg-zinc-200" : "bg-white"
-                          )}
-                        >
+                        <div className={clsxm("pl-8 py-1", active ? "bg-zinc-200" : "bg-white")}>
                           Product Number
                         </div>
                         {selected ? (
@@ -144,7 +129,9 @@ const SearchBar = () => {
       </form>
 
       <div className="mt-10">
-        {searchResults.length > 0 ? (
+        {loading ? (
+          <PropagateLoader color="#007a73" />
+        ) : searchResults.length > 0 ? (
           <table className="table-auto border-2 border-merck-teal border-collapse">
             <thead>
               <tr>
@@ -176,15 +163,21 @@ const SearchBar = () => {
                       <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
                     </a>
                   </td>
-                  <td scope="col" className="border-x border-black p-1">{result.id}</td>
-                  <td scope="col" className="border-x border-black p-1">{result.product_name}</td>
+                  <td scope="col" className="border-x border-black p-1">
+                    {result.id}
+                  </td>
+                  <td scope="col" className="border-x border-black p-1">
+                    {result.product_name}
+                  </td>
                   <td scope="col" className="border-x border-black p-1">
                     {result.product_brand}
                   </td>
                   <td scope="col" className="border-x border-black p-1">
                     {result.product_number}
                   </td>
-                  <td scope="col" className="border-x border-black p-1">{result.cas_number}</td>
+                  <td scope="col" className="border-x border-black p-1">
+                    {result.cas_number}
+                  </td>
                 </tr>
               ))}
             </tbody>
