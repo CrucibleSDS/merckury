@@ -4,7 +4,7 @@ FROM node:16 AS builder
 WORKDIR /merckury
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 COPY . .
 RUN yarn build
