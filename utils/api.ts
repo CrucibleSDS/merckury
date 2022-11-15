@@ -21,7 +21,7 @@ export type SafetyDataSheet = {
 }
 
 const searchSds = async (query: string, type: SearchType): Promise<SafetyDataSheet[]> => {
-  const res = await ApiClient.get("/sds/search", { params: { [type]: query } })
+  const res = await ApiClient.get("sds/search", { params: { [type]: query } })
   return res.data as SafetyDataSheet[];
 };
 
