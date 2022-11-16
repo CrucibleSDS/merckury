@@ -39,7 +39,7 @@ jobs:
         with:
           namespace: crucible
           manifests: |
-            crucible/silicon/deployment.yaml
+            crucible/merckury/deployment.yaml
           images: |
-            ghcr.io/den4200/silicon:${{ steps.sha_tag.outputs.tag }}
+            ghcr.io/den4200/merckury:${{ steps.sha_tag.outputs.tag }}
           kubectl-version: 'latest'
