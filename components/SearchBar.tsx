@@ -128,7 +128,7 @@ const SearchBar = () => {
         </fieldset>
       </form>
 
-      <div className="mt-10">
+      <div className="my-10">
         {loading ? (
           <PropagateLoader color="#007a73" />
         ) : searchResults.length > 0 ? (
