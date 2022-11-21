@@ -25,6 +25,8 @@ const SearchBar = () => {
     if (query.length !== 0) {
       fetchSearchResults();
     } else {
+      abortController.abort();
+      setLoading(false);
       setSearchResults([]);
     }
 
