@@ -9,12 +9,17 @@ const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SafetyDataSheet[]>([]);
   const [loading, setLoading] = useState(false);
+  const abortController = new AbortController();
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       setLoading(true);
-      setSearchResults(await searchSds(query));
-      setLoading(false);
+
+      const sds = await searchSds(query, abortController.signal);
+      if (sds !== null) {
+        setSearchResults(sds);
+        setLoading(false);
+      }
     };
 
     if (query.length !== 0) {
@@ -22,6 +27,10 @@ const SearchBar = () => {
     } else {
       setSearchResults([]);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [query]);
 
   const search = (event: FormEvent<HTMLFormElement>) => {

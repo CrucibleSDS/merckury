@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const ApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -14,9 +14,19 @@ export type SafetyDataSheet = {
   data: any;
 };
 
-const searchSds = async (query: string): Promise<SafetyDataSheet[]> => {
-  const res = await ApiClient.get("sds/search", { params: { query } });
-  return res.data as SafetyDataSheet[];
+const searchSds = async (
+  query: string,
+  signal?: AbortSignal
+): Promise<SafetyDataSheet[] | null> => {
+  try {
+    const res = await ApiClient.get("sds/search", { params: { query }, signal });
+    return res.data as SafetyDataSheet[];
+  } catch (err) {
+    if (axios.isCancel(err)) {
+      return null;
+    }
+    throw err;
+  }
 };
 
 export { searchSds };
