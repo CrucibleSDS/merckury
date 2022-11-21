@@ -66,7 +66,7 @@ const SearchBar = () => {
           <PropagateLoader color="#007a73" />
         ) : searchResults.length > 0 ? (
           <table className="table-auto border-2 border-merck-teal border-collapse">
-            <thead>
+            <thead className="bg-merck-teal text-white">
               <tr>
                 <th scope="col" className="border border-black px-3 py-2">
                   PDF
