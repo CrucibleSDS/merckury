@@ -200,7 +200,7 @@ const SearchBar = () => {
                   <div
                     className={clsxm(
                       "inline-block float-right cursor-pointer my-1",
-                      searchOffset > 0 && searchResult.hits.length === 0 ? "invisible" : ""
+                      searchResult.hits.length < SEARCH_LIMIT_PER_PAGE ? "invisible" : ""
                     )}
                     onClick={nextPage}
                   >
