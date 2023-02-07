@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import SearchBar from "@/components/SearchBar";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -21,16 +22,27 @@ const Home: NextPage = () => {
         <SearchBar />
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        Made with <HeartIcon className="w-6 h-6 mx-1 text-red-500" /> by
-        <a
-          className="ml-1 hover:text-merck-teal"
-          href="https://www.merck.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Merck &amp; Co.
-        </a>
+      <footer className="flex flex-col h-28 w-full items-center justify-center border-t">
+        <div className="space-x-4 mb-4 pb-4 px-16 border-b">
+          <Link className="hover:underline" href="/">
+            Home
+          </Link>
+          <Link className="hover:underline" href="/upload">
+            Upload SDS
+          </Link>
+        </div>
+
+        <div className="flex">
+          Made with <HeartIcon className="w-6 h-6 mx-1 text-red-500" /> by
+          <a
+            className="ml-1 hover:text-merck-teal"
+            href="https://www.merck.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Merck &amp; Co.
+          </a>
+        </div>
       </footer>
     </div>
   );

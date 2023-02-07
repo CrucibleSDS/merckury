@@ -72,4 +72,22 @@ const getBatchSds = async (
   }
 };
 
-export { getBatchSds, searchSds };
+const uploadSds = async (file: File): Promise<SafetyDataSheet | null> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const res = await ApiClient.post("/sds/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data as SafetyDataSheet;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return null;
+    }
+    throw err;
+  }
+};
+
+export { getBatchSds, searchSds, uploadSds };
