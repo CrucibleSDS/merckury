@@ -1835,6 +1835,7 @@ next@latest:
     react-spinners: ^0.13.6
     tailwind-merge: ^1.8.0
     tailwindcss: ^3.2.1
+    ts-custom-error: ^3.3.1
     typescript: 4.8.4
   languageName: unknown
   linkType: soft
@@ -2066,6 +2067,13 @@ next@latest:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
+  languageName: node
+  linkType: hard
+
+"ts-custom-error@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "ts-custom-error@npm:3.3.1"
+  checksum: 50a1e825fced68d70049bd8d282379a635e43aa023a370fa8e736b12a6edba7f18a2d731fa194ac35303a8b625be56e121bdb31d8a0318250d1a8b277059fce3
   languageName: node
   linkType: hard
 

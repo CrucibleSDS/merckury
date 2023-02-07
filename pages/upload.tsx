@@ -4,47 +4,74 @@ import Head from "next/head";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { useDropzone } from "react-dropzone";
 import clsxm from "@/utils/clsxm";
-import { SafetyDataSheet, uploadSds } from "@/utils/api";
+import { SafetyDataSheet, SafetyDataSheetUploadFailure, uploadSds } from "@/utils/api";
 import { PropagateLoader } from "react-spinners";
 import Link from "next/link";
-import prettyBytes from 'pretty-bytes';
+import prettyBytes from "pretty-bytes";
 
 const UploadSdsPage: NextPage = () => {
-  const onDrop = useCallback((files: File[]) => setUpload(files[0]), []);
+  const onDrop = useCallback((files: File[]) => setUploads(files), []);
 
-  const [upload, setUpload] = useState<File | null>(null);
-  const [sds, setSds] = useState<SafetyDataSheet | null>(null);
+  const [uploads, setUploads] = useState<File[]>([]);
+  const [sdses, setSdses] = useState<SafetyDataSheet[]>([]);
+  const [postUploadFailures, setPostUploadFailures] = useState<SafetyDataSheetUploadFailure[]>([]);
 
   useEffect(() => {
     const uploadFile = async (sdsFile: File) => {
-      const res = await uploadSds(sdsFile);
-
-      if (res === null) {
-        setUpload(null);
-      } else {
-        setSds(res);
+      try {
+        const res = await uploadSds(sdsFile);
+        setSdses((sdses) => sdses.concat(res));
+      } catch (err) {
+        if ((err as SafetyDataSheetUploadFailure).file !== undefined) {
+          setPostUploadFailures((failures) =>
+            failures.concat(err as SafetyDataSheetUploadFailure)
+          );
+        } else {
+          throw err;
+        }
       }
     };
 
-    if (upload !== null) {
-      uploadFile(upload);
+    if (uploads.length !== 0) {
+      if (postUploadFailures.length > 0) {
+        setPostUploadFailures([]);
+      }
+
+      for (const upload of uploads) {
+        uploadFile(upload);
+      }
     }
-  }, [upload]);
+  }, [uploads]);
 
   const { fileRejections, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "application/pdf": [".pdf"] },
-    maxFiles: 1,
-    multiple: false,
+    maxFiles: 10,
+    multiple: true,
   });
 
   const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.name}>
+    <li key={file.name} className="mb-2">
       {file.name} - {prettyBytes(file.size)}
       <ul>
         {errors.map((e) => (
           <li key={e.code}>{e.message}</li>
         ))}
+      </ul>
+    </li>
+  ));
+
+  const postUploadFailureItems = postUploadFailures.map((failure) => (
+    <li key={failure.file.name} className="mb-2">
+      {failure.file.name} - {prettyBytes(failure.file.size)}
+      <ul>
+        <li key={failure.statusCode}>
+          {failure.statusCode === 409
+            ? "SDS already exists in database"
+            : failure.statusCode === 500
+            ? "Unknown error"
+            : "Failed to parse SDS"}
+        </li>
       </ul>
     </li>
   ));
@@ -63,7 +90,7 @@ const UploadSdsPage: NextPage = () => {
       </header>
 
       <main className="flex w-full flex-1 flex-col items-center justify-start px-20 mt-10">
-        {upload === null && sds === null ? (
+        {uploads.length === 0 && sdses.length === 0 ? (
           <>
             <div className="flex items-center justify-center w-full" {...getRootProps()}>
               <label
@@ -105,22 +132,40 @@ const UploadSdsPage: NextPage = () => {
             </div>
             <p className="my-4 text-red-500 font-bold">{fileRejectionItems}</p>
           </>
-        ) : upload !== null && sds === null && fileRejections.length === 0 ? (
+        ) : uploads.length !== 0 &&
+          sdses.length < uploads.length &&
+          fileRejections.length === 0 &&
+          postUploadFailures.length === 0 ? (
           <PropagateLoader color="#007a73" />
         ) : (
           <div className="flex flex-col items-center w-full">
-            <div className="text-xl bg-emerald-400 rounded py-3 px-6 w-full font-bold text-white text-center mb-4">
-              Upload successful!
+            <div
+              className={clsxm(
+                "text-xl rounded py-3 px-6 w-full font-bold text-white text-center mb-4",
+                postUploadFailures.length === 0
+                  ? "bg-emerald-400"
+                  : postUploadFailures.length >= uploads.length
+                  ? "bg-red-400"
+                  : "bg-yellow-400"
+              )}
+            >
+              {postUploadFailures.length === 0
+                ? "Uploads successful!"
+                : postUploadFailures.length >= uploads.length
+                ? "All uploads failed."
+                : "Some uploads were successful."}
             </div>
             <span
               className="hover:font-semibold hover:underline underline-offset-4 transition-all duration-150 cursor-pointer"
               onClick={() => {
-                setUpload(null);
-                setSds(null);
+                setUploads([]);
+                setSdses([]);
+                setPostUploadFailures([]);
               }}
             >
               Have more to upload?
             </span>
+            <p className="my-4 text-red-500 font-bold">{postUploadFailureItems}</p>
           </div>
         )}
       </main>

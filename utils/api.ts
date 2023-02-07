@@ -1,5 +1,6 @@
 import axios from "axios";
 import { stringify } from "qs";
+import { customErrorFactory } from "ts-custom-error";
 
 const ApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -40,6 +41,19 @@ export type SafetyDataSheetSearchResult = {
   query: string;
 };
 
+export type SafetyDataSheetUploadFailure = {
+  file: File;
+  statusCode?: number;
+};
+
+export const SafetyDataSheetUploadFailure = customErrorFactory(function (
+  statusCode: number,
+  file: File
+) {
+  this.statusCode = statusCode;
+  this.file = file;
+});
+
 const searchSds = async (
   q: string,
   limit: number,
@@ -72,7 +86,7 @@ const getBatchSds = async (
   }
 };
 
-const uploadSds = async (file: File): Promise<SafetyDataSheet | null> => {
+const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
   const formData = new FormData();
   formData.append("file", file);
   try {
@@ -84,7 +98,7 @@ const uploadSds = async (file: File): Promise<SafetyDataSheet | null> => {
     return res.data as SafetyDataSheet;
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      return null;
+      throw new SafetyDataSheetUploadFailure(err.response?.status, file);
     }
     throw err;
   }
