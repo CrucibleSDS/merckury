@@ -142,7 +142,7 @@ const UploadSdsPage: NextPage = () => {
                   or{" "}
                   <span className={clsxm(isDragActive ? "font-semibold" : "")}>drag and drop</span>
                 </p>
-                <p className="text-xs text-gray-500">SDS PDF only</p>
+                <p className="text-xs text-gray-500">SDS PDFs only</p>
               </div>
               <input id="dropzone-file" type="file" className="hidden" {...getInputProps()} />
             </label>
