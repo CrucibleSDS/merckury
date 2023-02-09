@@ -4,7 +4,9 @@ import { customErrorFactory } from "ts-custom-error";
 
 const ApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  paramsSerializer: { serialize: (params) => stringify(params, { indices: false }) },
+  paramsSerializer: {
+    serialize: (params) => stringify(params, { indices: false }),
+  },
 });
 
 const SearchClient = axios.create({
@@ -61,7 +63,10 @@ const searchSds = async (
   signal?: AbortSignal
 ): Promise<SafetyDataSheetSearchResult | null> => {
   try {
-    const res = await SearchClient.get("/", { params: { q, limit, offset }, signal });
+    const res = await SearchClient.get("/", {
+      params: { q, limit, offset },
+      signal,
+    });
     return res.data as SafetyDataSheetSearchResult;
   } catch (err) {
     if (axios.isCancel(err)) {
@@ -76,7 +81,10 @@ const getBatchSds = async (
   signal?: AbortSignal
 ): Promise<SafetyDataSheet[] | null> => {
   try {
-    const res = await ApiClient.get("/sds/batch/", { params: { sds_ids }, signal });
+    const res = await ApiClient.get("/sds/batch/", {
+      params: { sds_ids },
+      signal,
+    });
     return res.data as SafetyDataSheet[];
   } catch (err) {
     if (axios.isCancel(err)) {
