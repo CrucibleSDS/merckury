@@ -1,9 +1,12 @@
 import axios from "axios";
 import { stringify } from "qs";
+import { customErrorFactory } from "ts-custom-error";
 
 const ApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  paramsSerializer: { serialize: (params) => stringify(params, { indices: false }) },
+  paramsSerializer: {
+    serialize: (params) => stringify(params, { indices: false }),
+  },
 });
 
 const SearchClient = axios.create({
@@ -40,6 +43,19 @@ export type SafetyDataSheetSearchResult = {
   query: string;
 };
 
+export type SafetyDataSheetUploadFailure = {
+  file: File;
+  statusCode?: number;
+};
+
+export const SafetyDataSheetUploadFailure = customErrorFactory(function (
+  statusCode: number,
+  file: File
+) {
+  this.statusCode = statusCode;
+  this.file = file;
+});
+
 const searchSds = async (
   q: string,
   limit: number,
@@ -47,7 +63,10 @@ const searchSds = async (
   signal?: AbortSignal
 ): Promise<SafetyDataSheetSearchResult | null> => {
   try {
-    const res = await SearchClient.get("/", { params: { q, limit, offset }, signal });
+    const res = await SearchClient.get("/", {
+      params: { q, limit, offset },
+      signal,
+    });
     return res.data as SafetyDataSheetSearchResult;
   } catch (err) {
     if (axios.isCancel(err)) {
@@ -62,7 +81,10 @@ const getBatchSds = async (
   signal?: AbortSignal
 ): Promise<SafetyDataSheet[] | null> => {
   try {
-    const res = await ApiClient.get("/sds/batch/", { params: { sds_ids }, signal });
+    const res = await ApiClient.get("/sds/batch/", {
+      params: { sds_ids },
+      signal,
+    });
     return res.data as SafetyDataSheet[];
   } catch (err) {
     if (axios.isCancel(err)) {
@@ -72,4 +94,22 @@ const getBatchSds = async (
   }
 };
 
-export { getBatchSds, searchSds };
+const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const res = await ApiClient.post("/sds/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data as SafetyDataSheet;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      throw new SafetyDataSheetUploadFailure(err.response?.status, file);
+    }
+    throw err;
+  }
+};
+
+export { getBatchSds, searchSds, uploadSds };
