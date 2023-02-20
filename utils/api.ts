@@ -22,6 +22,7 @@ export type SafetyDataSheet = {
   product_brand: string;
   product_number: string;
   cas_number: string;
+  hazards: string[];
   pdf_download_url: string;
   data: any;
 };
@@ -32,6 +33,7 @@ export type SafetyDataSheetHit = {
   product_brand: string;
   product_number: string;
   cas_number: string;
+  hazards: string[];
 };
 
 export type SafetyDataSheetSearchResult = {

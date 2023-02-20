@@ -149,6 +149,9 @@ const SearchBar = () => {
                 <th scope="col" className="border border-black px-6 py-2">
                   CAS Number
                 </th>
+                <th scope="col" className="border border-black px-6 py-2">
+                  Hazards
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -174,11 +177,22 @@ const SearchBar = () => {
                   <td scope="col" className="border-x border-black p-1">
                     {result.cas_number}
                   </td>
+                  <td scope="col" className="border-x border-black p-1">
+                    {result.hazards.length === 0 ? (
+                      <div className="text-center w-full">N/A</div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-1 m-1">
+                        {result.hazards.map((hazard) => (
+                          <img src={`/assets/${hazard}.svg`} alt={hazard} className="w-8 h-8" />
+                        ))}
+                      </div>
+                    )}
+                  </td>
                 </tr>
               ))}
               {searchResult.hits.length === 0 ? (
                 <tr>
-                  <td colSpan={6}>
+                  <td colSpan={7}>
                     <p className="my-1">No remaining results.</p>
                   </td>
                 </tr>
@@ -186,7 +200,7 @@ const SearchBar = () => {
             </tbody>
             <tfoot className="border-t-2 border-merck-teal">
               <tr>
-                <td colSpan={6} className="w-32">
+                <td colSpan={7} className="w-32">
                   <div
                     className={clsxm(
                       "inline-block float-left cursor-pointer my-1",
