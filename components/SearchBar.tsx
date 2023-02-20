@@ -188,7 +188,7 @@ const SearchBar = () => {
               ))}
               {searchResult.hits.length === 0 ? (
                 <tr>
-                  <td colSpan={6}>
+                  <td colSpan={7}>
                     <p className="my-1">No remaining results.</p>
                   </td>
                 </tr>
@@ -196,7 +196,7 @@ const SearchBar = () => {
             </tbody>
             <tfoot className="border-t-2 border-merck-teal">
               <tr>
-                <td colSpan={6} className="w-32">
+                <td colSpan={7} className="w-32">
                   <div
                     className={clsxm(
                       "inline-block float-left cursor-pointer my-1",
