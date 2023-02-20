@@ -178,11 +178,15 @@ const SearchBar = () => {
                     {result.cas_number}
                   </td>
                   <td scope="col" className="border-x border-black p-1">
-                    <div className="grid grid-cols-3 gap-1 m-1">
-                      {result.hazards.map((hazard) => (
-                        <img src={`/assets/${hazard}.svg`} alt={hazard} className="w-8 h-8" />
-                      ))}
-                    </div>
+                    {result.hazards.length === 0 ? (
+                      <div className="text-center w-full">N/A</div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-1 m-1">
+                        {result.hazards.map((hazard) => (
+                          <img src={`/assets/${hazard}.svg`} alt={hazard} className="w-8 h-8" />
+                        ))}
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
