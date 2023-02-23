@@ -4,18 +4,16 @@ import Head from "next/head";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { useDropzone } from "react-dropzone";
 import clsxm from "@/utils/clsxm";
-import { SafetyDataSheet, SafetyDataSheetUploadFailure, uploadSds } from "@/utils/api";
+import { SafetyDataSheetUploadFailure, uploadSds } from "@/utils/api";
 import Link from "next/link";
 import prettyBytes from "pretty-bytes";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UploadSdsPage: NextPage = () => {
-  const onDrop = useCallback((files: File[]) => setUploads(files), []);
-
   const [uploads, setUploads] = useState<File[]>([]);
-  const [sdses, setSdses] = useState<SafetyDataSheet[]>([]);
 
+  const onDrop = useCallback((files: File[]) => setUploads(files), []);
   const { fileRejections, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "application/pdf": [".pdf"] },
@@ -27,7 +25,6 @@ const UploadSdsPage: NextPage = () => {
     const uploadFile = async (sdsFile: File) => {
       try {
         const res = await uploadSds(sdsFile);
-        setSdses((sdses) => sdses.concat(res));
         toast.success(
           `${res.product_brand} ${res.product_number} (${res.cas_number}) - Upload successful!`
         );
