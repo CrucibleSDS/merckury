@@ -136,7 +136,7 @@ const SearchBar = () => {
         </fieldset>
       </form>
 
-      <div className="my-10">
+      <div className="my-10 text-center">
         {(searchResult === null || (loadingSds && sdsResults.length === 0)) &&
         query.length !== 0 ? (
           <PropagateLoader color="#007a73" />
