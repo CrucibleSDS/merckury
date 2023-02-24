@@ -1,6 +1,6 @@
 import TextInput from "@/components/TextInput";
 import { getBatchSds, SafetyDataSheet, SafetyDataSheetSearchResult, searchSds } from "@/utils/api";
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -8,6 +8,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { PropagateLoader } from "react-spinners";
+import Checkbox from "@/components/Checkbox";
+import { useSdsSelections } from "@/hooks/sdsSelection";
 import clsxm from "@/utils/clsxm";
 
 const SEARCH_LIMIT_PER_PAGE = 20;
@@ -20,6 +22,9 @@ const SearchBar = () => {
   const [searchOffset, setSearchOffset] = useState(0);
   const [loadingSds, setLoadingSds] = useState(false);
   const abortController = new AbortController();
+
+  const { sdsSelections, addSdsSelections, removeSdsSelections, clearSdsSelections } =
+    useSdsSelections();
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -101,6 +106,14 @@ const SearchBar = () => {
     }
   };
 
+  const handleCheck = (event: ChangeEvent<HTMLInputElement>, sdsId: number) => {
+    if (event.target.checked) {
+      addSdsSelections(sdsId);
+    } else {
+      removeSdsSelections(sdsId);
+    }
+  };
+
   return (
     <div className="w-11/12">
       <form className="w-11/12 mx-auto" onSubmit={search}>
@@ -131,6 +144,14 @@ const SearchBar = () => {
           <table className="table-auto border-2 border-merck-teal border-collapse">
             <thead className="bg-merck-teal text-white">
               <tr>
+                <th scope="col" className="border border-black px-2 py-1">
+                  <div
+                    className="border-2 border-white rounded flex justify-center items-center text-white font-bold w-6 h-6 cursor-pointer group hover:border-gray-200 transition-colors"
+                    onClick={() => removeSdsSelections(...sdsResults.map((sds) => sds.id))}
+                  >
+                    <span className="border border-t-white w-2.5 group-hover:border-gray-200 transition-colors" />
+                  </div>
+                </th>
                 <th scope="col" className="border border-black px-3 py-2">
                   PDF
                 </th>
@@ -157,27 +178,23 @@ const SearchBar = () => {
             <tbody>
               {sdsResults.map((result) => (
                 <tr className="even:bg-gray-200">
-                  <td scope="col" className="border-x border-black">
+                  <td className="border-x border-black p-2">
+                    <Checkbox
+                      onChange={(event) => handleCheck(event, result.id)}
+                      checked={sdsSelections.includes(result.id)}
+                    />
+                  </td>
+                  <td className="border-x border-black">
                     <a href={result.pdf_download_url}>
                       <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
                     </a>
                   </td>
-                  <td scope="col" className="border-x border-black p-1">
-                    {result.id}
-                  </td>
-                  <td scope="col" className="border-x border-black p-1">
-                    {result.product_name}
-                  </td>
-                  <td scope="col" className="border-x border-black p-1">
-                    {result.product_brand}
-                  </td>
-                  <td scope="col" className="border-x border-black p-1">
-                    {result.product_number}
-                  </td>
-                  <td scope="col" className="border-x border-black p-1">
-                    {result.cas_number}
-                  </td>
-                  <td scope="col" className="border-x border-black p-1">
+                  <td className="border-x border-black p-1">{result.id}</td>
+                  <td className="border-x border-black p-1">{result.product_name}</td>
+                  <td className="border-x border-black p-1">{result.product_brand}</td>
+                  <td className="border-x border-black p-1">{result.product_number}</td>
+                  <td className="border-x border-black p-1">{result.cas_number}</td>
+                  <td className="border-x border-black p-1">
                     {result.hazards.length === 0 ? (
                       <div className="text-center w-full">N/A</div>
                     ) : (
@@ -192,7 +209,7 @@ const SearchBar = () => {
               ))}
               {searchResult.hits.length === 0 ? (
                 <tr>
-                  <td colSpan={7}>
+                  <td colSpan={8}>
                     <p className="my-1">No remaining results.</p>
                   </td>
                 </tr>
@@ -200,7 +217,7 @@ const SearchBar = () => {
             </tbody>
             <tfoot className="border-t-2 border-merck-teal">
               <tr>
-                <td colSpan={7} className="w-32">
+                <td colSpan={8} className="w-32">
                   <div
                     className={clsxm(
                       "inline-block float-left cursor-pointer my-1",
