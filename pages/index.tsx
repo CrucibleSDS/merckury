@@ -3,64 +3,50 @@ import Head from "next/head";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
-import { useSdsSelections } from "@/hooks/sdsSelection";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import ShoppingCartButton from "@/components/ShoppingCartButton";
 
-const Home: NextPage = () => {
-  const { sdsSelections } = useSdsSelections();
+const Home: NextPage = () => (
+  <div className="flex min-h-screen flex-col items-center justify-center max-w-screen-lg mx-auto">
+    <Head>
+      <title>Merckury</title>
+      <link rel="icon" href="/favicon-16x16.png" />
+    </Head>
 
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center max-w-screen-lg mx-auto">
-      <Head>
-        <title>Merckury</title>
-        <link rel="icon" href="/favicon-16x16.png" />
-      </Head>
+    <header className="flex w-full justify-center items-center p-4 mt-8">
+      <img src="/merck-logo.svg" alt="" />
+      <div className="border-l-4 border-l-black h-10 ml-3" />
+      <h1 className="text-3xl font-bold -mt-[1.5px] ml-3">SDS Search</h1>
+    </header>
 
-      <header className="flex w-full justify-center items-center p-4 mt-8">
-        <img src="/merck-logo.svg" alt="" />
-        <div className="border-l-4 border-l-black h-10 ml-3" />
-        <h1 className="text-3xl font-bold -mt-[1.5px] ml-3">SDS Search</h1>
-      </header>
+    <main className="flex w-full flex-1 flex-col items-center justify-start px-20 mt-10 text-center">
+      <SearchBar />
+    </main>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-start px-20 mt-10 text-center">
-        <SearchBar />
-      </main>
+    <footer className="flex flex-col h-28 w-full items-center justify-center border-t">
+      <div className="space-x-4 mb-4 pb-4 px-16 border-b">
+        <Link className="hover:underline" href="/">
+          Home
+        </Link>
+        <Link className="hover:underline" href="/upload">
+          Upload SDS
+        </Link>
+      </div>
 
-      <footer className="flex flex-col h-28 w-full items-center justify-center border-t">
-        <div className="space-x-4 mb-4 pb-4 px-16 border-b">
-          <Link className="hover:underline" href="/">
-            Home
-          </Link>
-          <Link className="hover:underline" href="/upload">
-            Upload SDS
-          </Link>
-        </div>
+      <ShoppingCartButton />
 
-        <div className="fixed bottom-0 right-0 mx-8 my-6 text-2xl">
-          <div className="relative">
-            {sdsSelections.length > 0 ? (
-              <div className="absolute top-0 left-0 bg-white p-2 rounded-full text-sm font-bold border border-merck-teal w-8 h-8 -mt-2 -ml-2">
-                <div className="-mt-1 text-center">{sdsSelections.length}</div>
-              </div>
-            ) : null}
-            <ShoppingCartIcon className="w-16 h-16 p-4 text-white bg-merck-teal rounded-full" />
-          </div>
-        </div>
-
-        <div className="flex">
-          Made with <HeartIcon className="w-6 h-6 mx-1 text-red-500" /> by
-          <a
-            className="ml-1 hover:text-merck-teal"
-            href="https://www.merck.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Merck &amp; Co.
-          </a>
-        </div>
-      </footer>
-    </div>
-  );
-};
+      <div className="flex">
+        Made with <HeartIcon className="w-6 h-6 mx-1 text-red-500" /> by
+        <a
+          className="ml-1 hover:text-merck-teal"
+          href="https://www.merck.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Merck &amp; Co.
+        </a>
+      </div>
+    </footer>
+  </div>
+);
 
 export default Home;

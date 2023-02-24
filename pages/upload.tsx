@@ -9,12 +9,9 @@ import Link from "next/link";
 import prettyBytes from "pretty-bytes";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSdsSelections } from "@/hooks/sdsSelection";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import ShoppingCartButton from "@/components/ShoppingCartButton";
 
 const UploadSdsPage: NextPage = () => {
-  const { sdsSelections } = useSdsSelections();
-
   const [uploads, setUploads] = useState<File[]>([]);
 
   const onDrop = useCallback((files: File[]) => setUploads(files), []);
@@ -99,16 +96,7 @@ const UploadSdsPage: NextPage = () => {
         pauseOnHover
         theme="colored"
       />
-      <div className="fixed bottom-0 right-0 mx-8 my-6 text-2xl">
-        <div className="relative">
-          {sdsSelections.length > 0 ? (
-            <div className="absolute top-0 left-0 bg-white p-2 rounded-full text-sm font-bold border border-merck-teal w-8 h-8 -mt-2 -ml-2">
-              <div className="-mt-1 text-center">{sdsSelections.length}</div>
-            </div>
-          ) : null}
-          <ShoppingCartIcon className="w-16 h-16 p-4 text-white bg-merck-teal rounded-full" />
-        </div>
-      </div>
+      <ShoppingCartButton />
       <div className="flex min-h-screen flex-col items-center justify-center max-w-screen-lg mx-auto">
         <Head>
           <title>Merckury | Upload SDS</title>
