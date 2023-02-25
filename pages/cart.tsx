@@ -1,9 +1,7 @@
 import Layout from "@/components/Layout";
 
 const CartPage = () => {
-  return <Layout title="Cart" heading="SDS Cart">
-    hello
-  </Layout>;
+  return <Layout title="Cart" heading="SDS Cart"></Layout>;
 };
 
 export default CartPage;
