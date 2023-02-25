@@ -1,14 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
-import { HeartIcon } from "@heroicons/react/24/solid";
 import { useDropzone } from "react-dropzone";
 import clsxm from "@/utils/clsxm";
 import { SafetyDataSheetUploadFailure, uploadSds } from "@/utils/api";
-import Link from "next/link";
 import prettyBytes from "pretty-bytes";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import ShoppingCartButton from "@/components/ShoppingCartButton";
 import Layout from "@/components/Layout";
 
@@ -85,18 +81,6 @@ const UploadSdsPage: NextPage = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <ShoppingCartButton />
       <Layout title="SDS Upload" heading="SDS Upload">
         <div className="flex items-center justify-center w-full" {...getRootProps()}>
