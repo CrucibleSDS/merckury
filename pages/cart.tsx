@@ -7,7 +7,7 @@ import { useState } from "react";
 import { PropagateLoader } from "react-spinners";
 
 const CartPage = () => {
-  const { sdsSelections, removeSdsSelections, clearSdsSelections } = useSdsSelections();
+  const { sdsSelections, removeSdsSelections } = useSdsSelections();
   const [sdses, setSdses] = useState<SafetyDataSheet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [initialLoad, setInitialLoad] = useState(true);
