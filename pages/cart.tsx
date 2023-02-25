@@ -45,22 +45,25 @@ const CartPage = () => {
               <ul>
                 {sdses.map((sds) => (
                   <li className="border-b border-b-merck-teal p-2" key={sds.id}>
-                    <a
-                      href={sds.pdf_download_url}
-                      target="_blank"
-                      className="text-xl inline-block"
-                    >
-                      {sds.product_name}
-                    </a>
-                    <span className="ml-1.5 text-xs">({sds.id})</span>
-                    <div className="float-right space-x-1">
-                      {sds.hazards.map((hazard) => (
-                        <img
-                          src={`/assets/${hazard}.svg`}
-                          alt={hazard}
-                          className="w-7 h-7 inline-block"
-                        />
-                      ))}
+                    <div className="flex justify-between">
+                      <a
+                        href={sds.pdf_download_url}
+                        target="_blank"
+                        className="text-xl inline-block"
+                      >
+                        {sds.product_name}
+                        <span className="ml-1.5 text-xs flex-grow">({sds.id})</span>
+                      </a>
+
+                      <div className="flex-grow flex justify-end space-x-1">
+                        {sds.hazards.map((hazard) => (
+                          <img
+                            src={`/assets/${hazard}.svg`}
+                            alt={hazard}
+                            className="w-7 h-7 inline-block"
+                          />
+                        ))}
+                      </div>
                     </div>
                     <div className="border-t border-t-gray-300 mt-2 pt-2 text-sm">
                       <div className="inline-block space-x-2">
