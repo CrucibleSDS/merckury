@@ -23,8 +23,7 @@ const SearchBar = () => {
   const [loadingSds, setLoadingSds] = useState(false);
   const abortController = new AbortController();
 
-  const { sdsSelections, addSdsSelections, removeSdsSelections, clearSdsSelections } =
-    useSdsSelections();
+  const { sdsSelections, addSdsSelections, removeSdsSelections } = useSdsSelections();
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -185,7 +184,7 @@ const SearchBar = () => {
                     />
                   </td>
                   <td className="border-x border-black">
-                    <a href={result.pdf_download_url}>
+                    <a href={result.pdf_download_url} target="_blank">
                       <DocumentArrowDownIcon className="mx-auto h-5 w-5" />
                     </a>
                   </td>
