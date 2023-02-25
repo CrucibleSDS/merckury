@@ -30,6 +30,7 @@ export const SdsSelectionsProvider = (props: SdsSelectionsProviderProps) => {
   useEffect(() => {
     if (sdsSelections.length > 0 || (sdsSelections.length === 0 && toClear)) {
       localStorage.setItem("cart", JSON.stringify(sdsSelections));
+      setToClear(false);
     }
   }, [sdsSelections]);
 
@@ -38,6 +39,7 @@ export const SdsSelectionsProvider = (props: SdsSelectionsProviderProps) => {
   };
 
   const removeSdsSelections = (...sdsIds: number[]) => {
+    setToClear(true);
     setSdsSelections((selections) =>
       selections.filter((selection) => !sdsIds.includes(selection))
     );
