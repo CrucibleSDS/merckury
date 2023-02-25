@@ -978,6 +978,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "immutable@npm:4.2.4"
+  checksum: 3be84eded37b05e65cad57bfba630bc1bf170c498b7472144bc02d2650cc9baef79daf03574a9c2e41d195ebb55a1c12c9b312f41ee324b653927b24ad8bcaa7
+  languageName: node
+  linkType: hard
+
 "imurmurhash@npm:^0.1.4":
   version: 0.1.4
   resolution: "imurmurhash@npm:0.1.4"
@@ -1082,6 +1089,13 @@ __metadata:
   version: 2.0.0
   resolution: "isexe@npm:2.0.0"
   checksum: 26bf6c5480dda5161c820c5b5c751ae1e766c587b1f951ea3fcfc973bafb7831ae5b54a31a69bd670220e42e99ec154475025a468eae58ea262f813fdc8d1c62
+  languageName: node
+  linkType: hard
+
+"js-file-download@npm:^0.4.12":
+  version: 0.4.12
+  resolution: "js-file-download@npm:0.4.12"
+  checksum: a03847eef0184fbf34a7b7fd365ea6aa1a6cc142efeac52c4baa0cdde845dc93718eb66808dfcffd6c91b37ddc9d058d352ac9698b4280744bad3587240c93b6
   languageName: node
   linkType: hard
 
@@ -1843,6 +1857,8 @@ next@latest:
     autoprefixer: ^10.4.12
     axios: ^1.1.3
     clsx: ^1.2.1
+    immutable: ^4.2.4
+    js-file-download: ^0.4.12
     next: latest
     postcss: ^8.4.18
     pretty-bytes: ^6.1.0

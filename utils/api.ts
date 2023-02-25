@@ -1,5 +1,6 @@
 import axios from "axios";
 import { stringify } from "qs";
+import fileDownload from "js-file-download";
 import { customErrorFactory } from "ts-custom-error";
 
 const ApiClient = axios.create({
@@ -58,6 +59,16 @@ export const SafetyDataSheetUploadFailure = customErrorFactory(function (
   this.file = file;
 });
 
+export type CheckoutItem = {
+  sds_id: number;
+  mass: number;
+};
+
+export const GenerationFailure = customErrorFactory(function (statusCode: number) {
+  this.statusCode = statusCode;
+  this.generationFailure = true;
+});
+
 const searchSds = async (
   q: string,
   limit: number,
@@ -114,4 +125,16 @@ const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
   }
 };
 
-export { getBatchSds, searchSds, uploadSds };
+const generateCoverSheet = async (items: CheckoutItem[]): Promise<void> => {
+  try {
+    const res = await ApiClient.post("/sds/checkout/", items, { responseType: "blob" });
+    fileDownload(res.data, `cover_sheet_${Date.now()}.pdf`);
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      throw new GenerationFailure(err.response?.status);
+    }
+    throw err;
+  }
+};
+
+export { getBatchSds, searchSds, uploadSds, generateCoverSheet };

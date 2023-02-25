@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { useSdsSelections } from "@/hooks/sdsSelection";
 import { getBatchSds, SafetyDataSheet } from "@/utils/api";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
 import { PropagateLoader } from "react-spinners";
@@ -100,9 +100,12 @@ const CartPage = () => {
               </strong>{" "}
               in your cart.
             </p>
-            <button className="bg-merck-teal text-white text-sm rounded px-1 py-1.5 w-full">
+            <Link
+              href="/checkout"
+              className="block bg-merck-teal text-white text-sm rounded px-1 py-1.5 w-full"
+            >
               Proceed to checkout
-            </button>
+            </Link>
           </div>
         </div>
       )}
