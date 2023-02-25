@@ -36,7 +36,7 @@ const CartPage = () => {
         <PropagateLoader color="#007a73" />
       ) : (
         <div className="space-x-4 w-full mb-8">
-          <div className="table-auto border-2 border-merck-teal border-collapse px-2 py-1 w-[calc(66%-16px)] inline-block">
+          <div className="border-2 border-merck-teal px-2 py-1 w-[calc(66%-16px)] inline-block">
             {sdsSelections.length === 0 ? (
               <div className="flex justify-center items-center h-[72px]">
                 No chemicals in cart :&#x28;
