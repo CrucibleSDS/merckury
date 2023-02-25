@@ -7,7 +7,7 @@ type CheckboxProps = ComponentPropsWithRef<"input">;
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ className, ...rest }, ref) => (
   <label
     className={clsxm(
-      "group-option relative mr-2 block h-4 w-4 cursor-pointer select-none",
+      "group-option relative mr-2 -mt-1.5 block h-4 w-4 cursor-pointer select-none",
       className
     )}
   >
