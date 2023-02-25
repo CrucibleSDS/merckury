@@ -9,7 +9,8 @@ import { PropagateLoader } from "react-spinners";
 const CartPage = () => {
   const { sdsSelections, removeSdsSelections, clearSdsSelections } = useSdsSelections();
   const [sdses, setSdses] = useState<SafetyDataSheet[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     const fetchSdses = async () => {
@@ -19,6 +20,7 @@ const CartPage = () => {
         setSdses(sds);
       }
       setIsLoading(false);
+      setInitialLoad(false);
     };
 
     if (sdsSelections.length === 0) {
@@ -30,7 +32,7 @@ const CartPage = () => {
 
   return (
     <Layout title="Cart" heading="SDS Cart">
-      {isLoading ? (
+      {isLoading && initialLoad ? (
         <PropagateLoader color="#007a73" />
       ) : (
         <div className="space-x-4 w-full mb-8">
