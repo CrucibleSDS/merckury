@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 type SdsSelectionsContextType = {
@@ -16,6 +17,21 @@ const SdsSelectionsContext = createContext<SdsSelectionsContextType>(undefined!)
 
 export const SdsSelectionsProvider = (props: SdsSelectionsProviderProps) => {
   const [sdsSelections, setSdsSelections] = useState<number[]>(props.sdsSelections ?? []);
+  const [toClear, setToClear] = useState(false);
+
+  useEffect(() => {
+    const cart = localStorage?.getItem("cart");
+
+    if (cart !== null) {
+      setSdsSelections(JSON.parse(cart));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (sdsSelections.length > 0 || (sdsSelections.length === 0 && toClear)) {
+      localStorage.setItem("cart", JSON.stringify(sdsSelections));
+    }
+  }, [sdsSelections]);
 
   const addSdsSelections = (...sdsIds: number[]) => {
     setSdsSelections((selections) => selections.concat(...sdsIds));
@@ -28,6 +44,7 @@ export const SdsSelectionsProvider = (props: SdsSelectionsProviderProps) => {
   };
 
   const clearSdsSelections = () => {
+    setToClear(true);
     setSdsSelections([]);
   };
 
