@@ -7,9 +7,9 @@ import { useState } from "react";
 import { PropagateLoader } from "react-spinners";
 
 const CartPage = () => {
-  const { sdsSelections, removeSdsSelections } = useSdsSelections();
+  const { sdsSelections, removeSdsSelections, clearSdsSelections } = useSdsSelections();
   const [sdses, setSdses] = useState<SafetyDataSheet[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
@@ -106,6 +106,10 @@ const CartPage = () => {
             >
               Proceed to checkout
             </Link>
+            <hr className="border-neutral-300" />
+            <button onClick={clearSdsSelections} className="bg-red-500 text-white text-sm rounded px-1 py-1.5 w-full">
+              Clear cart
+            </button>
           </div>
         </div>
       )}
