@@ -77,7 +77,7 @@ const searchSds = async (
 ): Promise<SafetyDataSheetSearchResult | null> => {
   try {
     const res = await SearchClient.get("/", {
-      params: { q, limit, offset },
+      params: { q, limit, offset, matchingStrategy: "all" },
       signal,
     });
     return res.data as SafetyDataSheetSearchResult;
