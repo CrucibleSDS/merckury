@@ -12,9 +12,10 @@ const Layout = (props: { title?: string; heading?: string; children?: ReactNode 
       </Head>
 
       <header className="flex w-full justify-center items-center p-4 mt-8">
-        <img src="/merck-logo.svg" alt="" />
+        <img className="block dark:hidden" src="/merck-logo-light.svg" alt="" />
+        <img className="hidden dark:block" src="/merck-logo-dark.svg" alt="" />
         {props.heading !== undefined ? (
-          <div className="border-l-4 border-l-black h-10 ml-3" />
+          <div className="border-l-4 border-l-black dark:border-l-white h-10 ml-3" />
         ) : null}
         <h1 className="text-3xl font-bold -mt-[1.5px] ml-3">{props.heading}</h1>
       </header>

@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <div className="text-black dark:text-white bg-white dark:bg-neutral-800">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SdsSelectionsProvider>
         <Component {...pageProps} />
       </SdsSelectionsProvider>
-    </>
+    </div>
   );
 }
 

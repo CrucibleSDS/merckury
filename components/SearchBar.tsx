@@ -117,7 +117,7 @@ const SearchBar = () => {
     <div className="w-11/12">
       <form className="w-11/12 mx-auto" onSubmit={search}>
         <fieldset className="relative border-2 border-merck-teal">
-          <legend className="text-merck-teal text-left font-semibold ml-1 -mb-3 px-1 pb-1">
+          <legend className="text-merck-teal dark:text-white text-left font-semibold ml-1 -mb-3 px-1 pb-1">
             Search SDS Documents
           </legend>
           <TextInput
@@ -130,7 +130,7 @@ const SearchBar = () => {
             className="absolute w-6 top-0 right-0 m-[6px] text-black focus:outline-none"
             type="submit"
           >
-            <MagnifyingGlassIcon width={20} height={20} />
+            <MagnifyingGlassIcon width={20} height={20} className="dark:text-white" />
           </button>
         </fieldset>
       </form>
@@ -176,7 +176,7 @@ const SearchBar = () => {
             </thead>
             <tbody>
               {sdsResults.map((result) => (
-                <tr className="even:bg-gray-200">
+                <tr className="even:bg-gray-200 dark:even:bg-neutral-700">
                   <td className="border-x border-black p-2">
                     <Checkbox
                       onChange={(event) => handleCheck(event, result.id)}
