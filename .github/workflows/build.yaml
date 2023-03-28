@@ -33,8 +33,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        cache-from: type=registry,ref=ghcr.io/den4200/merckury:latest
+        cache-from: type=registry,ref=ghcr.io/cruciblesds/merckury:latest
         cache-to: type=inline
         tags: |
-          ghcr.io/den4200/merckury:latest
-          ghcr.io/den4200/merckury:${{ steps.sha_tag.outputs.tag }}
+          ghcr.io/cruciblesds/merckury:latest
+          ghcr.io/cruciblesds/merckury:${{ steps.sha_tag.outputs.tag }}
