@@ -21,11 +21,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ className, ...re
     <span
       className={clsxm(
         "group-option-hover:bg-pink-200 absolute left-0 top-0 h-6 w-6 rounded",
-        "border-2 border-merck-teal bg-white hover:bg-gray-100 transition-colors duration-200 ease-linear"
+        "border-2 border-merck-teal bg-white dark:bg-neutral-800 hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors duration-200 ease-linear"
       )}
     />
     <span className="absolute top-[6px] left-1 hidden transition-colors duration-300 ease-linear peer-checked:block">
-      <div className="-mt-0.5 ml-1 rotate-45 h-[13px] w-[7px] border-b-[3px] border-r-[3px] border-b-merck-teal border-r-merck-teal" />
+      <div className="-mt-0.5 ml-1 rotate-45 h-[13px] w-[7px] border-b-[3px] border-r-[3px] border-b-merck-teal border-r-merck-teal dark:border-b-white dark:border-r-white" />
     </span>
   </label>
 ));

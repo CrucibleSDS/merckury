@@ -176,10 +176,12 @@ const CheckoutPage = () => {
                   </p>
                   <button
                     onClick={generate}
-                    disabled={!sdsSelections.every(
-                      (sdsId) => !isNaN(masses.get(sdsId, 0)) && masses.get(sdsId, 0) > 0
-                    )}
-                    className="block bg-merck-teal disabled:bg-neutral-300 disabled:text-neutral-500 text-white text-sm rounded px-1 py-1.5 w-full"
+                    disabled={
+                      !sdsSelections.every(
+                        (sdsId) => !isNaN(masses.get(sdsId, 0)) && masses.get(sdsId, 0) > 0
+                      )
+                    }
+                    className="block bg-merck-teal disabled:bg-neutral-300 disabled:text-neutral-500 dark:disabled:bg-neutral-700 dark:disabled:text-neutral-400 text-white text-sm rounded px-1 py-1.5 w-full"
                   >
                     Generate cover sheet
                   </button>
