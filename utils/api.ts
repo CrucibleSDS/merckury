@@ -61,15 +61,17 @@ export const SafetyDataSheetUploadFailure = customErrorFactory(function (
 
 export type CheckoutItem = {
   sds_id: number;
-  mass: number;
+  percentage: number;
 };
 
-export const GenerationFailure = customErrorFactory(function (statusCode: number) {
+export const GenerationFailure = customErrorFactory(function (
+  statusCode: number
+) {
   this.statusCode = statusCode;
   this.generationFailure = true;
 });
 
-const searchSds = async (
+export const searchSds = async (
   q: string,
   limit: number,
   offset: number,
@@ -89,7 +91,7 @@ const searchSds = async (
   }
 };
 
-const getBatchSds = async (
+export const getBatchSds = async (
   sds_ids: number[],
   signal?: AbortSignal
 ): Promise<SafetyDataSheet[] | null> => {
@@ -107,7 +109,7 @@ const getBatchSds = async (
   }
 };
 
-const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
+export const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
   const formData = new FormData();
   formData.append("file", file);
   try {
@@ -125,9 +127,29 @@ const uploadSds = async (file: File): Promise<SafetyDataSheet> => {
   }
 };
 
-const generateCoverSheet = async (items: CheckoutItem[]): Promise<void> => {
+export const generateCoverSheet = async (
+  productName: string,
+  destination: string,
+  measurementType: string,
+  certificationDate: string,
+  sensitivity: string,
+  items: CheckoutItem[]
+): Promise<void> => {
   try {
-    const res = await ApiClient.post("/sds/checkout/", items, { responseType: "blob" });
+    const res = await ApiClient.post(
+      "/sds/checkout/",
+      {
+        product_name: productName,
+        destination,
+        measurement_type: measurementType,
+        certification_date: certificationDate,
+        sensitivity,
+        items,
+      },
+      {
+        responseType: "blob",
+      }
+    );
     fileDownload(res.data, `cover_sheet_${Date.now()}.pdf`);
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -136,5 +158,3 @@ const generateCoverSheet = async (items: CheckoutItem[]): Promise<void> => {
     throw err;
   }
 };
-
-export { getBatchSds, searchSds, uploadSds, generateCoverSheet };
